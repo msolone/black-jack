@@ -2,7 +2,7 @@
 
 - [X] Create Deck
 - [X] Give Values to Cards
-- [ ] Shuffle Deck
+- [X] Shuffle Deck
 - [ ] Deal Player 2 face up cards
 - [ ] Deal CPU 2 facedown cards
 - [ ] Create 'Hit' button that will deal the player 1 face up card at a time
