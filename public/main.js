@@ -11,9 +11,12 @@ const rank = ['Ace', '2','3','4','5','6','7','8','9','10','Jack','Queen','King']
 const cardValue = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 playerHand = []
 dealerHand = []
+playerOneScore = 0
+dealerScore = 0
 
-// Creates an Array of 52 objects with rank, suits, and card values
+// Creates an Array of 52 shuffled objects with rank, suits, and card values 
 const createDeckOfCard = () => { 
+  // creates 52 object array with rank, suit, and value
   for(let j = 0; j < suit.length; j++) {
     for (let i = 0; i < rank.length; i++) {
       let card = {
@@ -24,6 +27,7 @@ const createDeckOfCard = () => {
       deck.push(card)
     }
   }
+  // shuffles array
   for (i = 0; i < deck.length; i++) {
     let j = Math.floor(Math.random() * i)
     let temp = deck[i]
@@ -31,6 +35,8 @@ const createDeckOfCard = () => {
     deck[j] = temp
   }
 }
+
+
 
 const dealCards = () => {
   for (i = 1; i < 5; i++) {
@@ -52,6 +58,39 @@ const dealCards = () => {
   card = playerHand[1]
   newLi.textContent = card.rank + ' of ' + card.suit
   document.querySelector('.player-hand').appendChild(newLi)
+  let score = playerHand[0].value + playerHand[1].value
+  document.querySelector('.current-score').textContent = score
+ 
+}
+
+// const calculateScore = () => {
+//   for (i = 0; i < playerHand.length; i++) {
+//     playerOneScore += playerHand[i].value 
+//   }
+//   console.log(playerOneScore)   
+// }
+
+// // dealers score 
+// dealerScore = dealerHand[0].value + dealerHand[1].value
+
+
+const hitMe = () => {
+  playerHand.push(deck[deck.length - 1])
+  deck.pop()
+  playerOneScore = 0
+  for (i = 0; i < playerHand.length; i++) {
+    playerOneScore += playerHand[i].value 
+  }
+  console.log(playerOneScore) 
+
+  let newLi = document.createElement('li')
+  card = playerHand[playerHand.length -1]
+  newLi.textContent = card.rank + ' of ' + card.suit
+  document.querySelector('.player-hand').appendChild(newLi)
+
+  document.querySelector('.current-score').textContent = playerOneScore
+  
+
 }
 
 
@@ -62,9 +101,10 @@ const dealCards = () => {
 
 
 
-
-
+document.addEventListener('DOMContentLoaded', createDeckOfCard)
 
 document.querySelector('.deal').addEventListener('click', dealCards)
 
-document.addEventListener('DOMContentLoaded', createDeckOfCard)
+document.querySelector('.hit').addEventListener('click', hitMe)
+
+document.querySelector('.stand').addEventListener('click', standAndPresent)

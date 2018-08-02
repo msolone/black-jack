@@ -5,7 +5,7 @@
 - [X] Shuffle Deck
 - [X] Deal Player 2 face up cards
 - [X] Deal CPU 2 facedown cards
-- [ ] Create 'Hit' button that will deal the player 1 face up card at a time
+- [X] Create 'Hit' button that will deal the player 1 face up card at a time
 - [ ] Create 'Stand' button that will reveal the dealers hand and add cards until they reach 17 or higher
 - [ ] Compare hand value and declare winner
         - If either player bust they automatically lose.
