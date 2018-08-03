@@ -4,15 +4,16 @@
 - [X] Give Values to Cards
 - [X] Shuffle Deck
 - [X] Deal Player 2 face up cards
-- [X] Deal CPU 2 facedown cards
+- [X] Deal CPU 1 face up and 1 face down cards
 - [X] Create 'Hit' button that will deal the player 1 face up card at a time
 - [X] Create 'Stand' button that will reveal the dealers hand and add cards until they reach 17 or higher
         - Dealer Reveals hand
         - Dealer Draws cards until score is greater than              the players score 
 - [X] Compare hand value and declare winner
         - If either player bust they automatically lose.
+        - If the players tie, 'Push' is declared
 - [ ] Create button to play again
         - [X] clear players hands
         - [X] clear deck
         - [X] create new shuffled deck 
-        - [ ] clear table of cards
+        - [X] clear table of cards

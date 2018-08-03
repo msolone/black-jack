@@ -54,6 +54,11 @@ const dealCards = () => {
   card = playerHand[1]
   newLi.textContent = card.rank + ' of ' + card.suit
   document.querySelector('.player-hand').appendChild(newLi)
+  // Reveals dealers first card
+  newLi = document.createElement('li')
+  card = dealerHand[0]
+  newLi.textContent = card.rank + ' of ' + card.suit
+  document.querySelector('.dealer-hand').appendChild(newLi)
   // Displays players current score
   let score = playerHand[0].value + playerHand[1].value
   document.querySelector('.current-score').textContent = score
@@ -103,7 +108,7 @@ const standAndPresent = () => {
 
   }
   // Reveal dealer cards 
-  for (let i = 0; i < dealerHand.length; i ++) {
+  for (let i = 1; i < dealerHand.length; i ++) {
     const newLi = document.createElement('li')
     card = dealerHand[i]
     newLi.textContent = card.rank + ' of ' + card.suit
@@ -115,7 +120,7 @@ const standAndPresent = () => {
     document.querySelector('.declare-winner-banner').textContent = 'Dealer Bust, You Win!'
     } else {
       if (dealerScore === playerOneScore) {
-        document.querySelector('.declare-winner-banner').textContent = 'Tie, House Rules, Dealer Wins'
+        document.querySelector('.declare-winner-banner').textContent = 'Tie, Push'
       } else if (dealerScore > playerOneScore) {
         document.querySelector('.declare-winner-banner').textContent = 'Dealer Wins'
         } else {
@@ -127,10 +132,13 @@ const standAndPresent = () => {
   }
   
   const playAgain = () => {
+    // Sets all arrays back to empty
     playerHand.length = 0
     dealerHand.length = 0
     deck.length = 0
+    // Recreates deck and shuffles
     createDeckOfCards()
+    // Clears the table and resets scores to zero
     document.querySelector('.player-hand').textContent = ''
     document.querySelector('.dealer-hand').textContent = ''
     document.querySelector('.current-score').textContent = '0'
