@@ -12,3 +12,7 @@
 - [X] Compare hand value and declare winner
         - If either player bust they automatically lose.
 - [ ] Create button to play again
+        - [X] clear players hands
+        - [X] clear deck
+        - [X] create new shuffled deck 
+        - [ ] clear table of cards

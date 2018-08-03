@@ -1,21 +1,15 @@
-// const main = () => {
-//   document.querySelector('h1').textContent += '?'
-// }
-
-// document.addEventListener('DOMContentLoaded', main)
-
 
 const deck = []
 const suit = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
 const rank = ['Ace', '2','3','4','5','6','7','8','9','10','Jack','Queen','King']
 const cardValue = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-playerHand = []
-dealerHand = []
-playerOneScore = 0
-dealerScore = 0
+let playerHand = []
+let dealerHand = []
+let playerOneScore = 0
+let dealerScore = 0
 
 // Creates an Array of 52 shuffled objects with rank, suits, and card values 
-const createDeckOfCard = () => { 
+const createDeckOfCards = () => { 
   // creates 52 object array with rank, suit, and value
   for(let j = 0; j < suit.length; j++) {
     for (let i = 0; i < rank.length; i++) {
@@ -133,7 +127,15 @@ const standAndPresent = () => {
   }
   
   const playAgain = () => {
-    console.log('this works')
+    playerHand.length = 0
+    dealerHand.length = 0
+    deck.length = 0
+    createDeckOfCards()
+    document.querySelector('.player-hand').textContent = ''
+    document.querySelector('.dealer-hand').textContent = ''
+    document.querySelector('.current-score').textContent = '0'
+    document.querySelector('.current-score2').textContent = '0'
+    document.querySelector('.declare-winner-banner').textContent = ''
   }
 
 
@@ -141,7 +143,7 @@ const standAndPresent = () => {
 
 
 
-document.addEventListener('DOMContentLoaded', createDeckOfCard)
+document.addEventListener('DOMContentLoaded', createDeckOfCards)
 
 document.querySelector('.deal').addEventListener('click', dealCards)
 
