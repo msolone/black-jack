@@ -12,8 +12,16 @@
 - [X] Compare hand value and declare winner
         - If either player bust they automatically lose.
         - If the players tie, 'Push' is declared
-- [ ] Create button to play again
+- [X] Create button to play again
         - [X] clear players hands
         - [X] clear deck
         - [X] create new shuffled deck 
         - [X] clear table of cards
+
+
+### Refractor 
+
+- [X] Add a function for appending lists 
+- [ ] Add function for changing content on DOM
+- [ ] Add Card Images
+- [ ] Style CSS

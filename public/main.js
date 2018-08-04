@@ -1,4 +1,3 @@
-
 const deck = []
 const suit = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
 const rank = ['Ace', '2','3','4','5','6','7','8','9','10','Jack','Queen','King']
@@ -30,7 +29,18 @@ const createDeckOfCards = () => {
   }
 }
 
+// Adds new list items to the DOM
+const addNewListItem = (whoseHand, handPosition, listClass) => {
+  let newLi = document.createElement('li')
+  card = whoseHand[handPosition]
+  newLi.textContent = card.rank + ' of ' + card.suit
+  document.querySelector(listClass).appendChild(newLi)
+}
 
+// Changes text content on DOM 
+const changeDOMText = (tagClass, newContent) => {
+  document.querySelector(tagClass).textContent = newContent
+}
 
 const dealCards = () => {
   for (i = 1; i < 5; i++) {
@@ -45,24 +55,16 @@ const dealCards = () => {
       }
   }
   // Reveals first card in players hand
-  let newLi = document.createElement('li')
-  card = playerHand[0]
-  newLi.textContent = card.rank + ' of ' + card.suit
-  document.querySelector('.player-hand').appendChild(newLi)
+  addNewListItem(playerHand, 0, '.player-hand')
   // Reveals second card in players hand
-  newLi = document.createElement('li')
-  card = playerHand[1]
-  newLi.textContent = card.rank + ' of ' + card.suit
-  document.querySelector('.player-hand').appendChild(newLi)
+  addNewListItem(playerHand, 1, '.player-hand')
   // Reveals dealers first card
-  newLi = document.createElement('li')
-  card = dealerHand[0]
-  newLi.textContent = card.rank + ' of ' + card.suit
-  document.querySelector('.dealer-hand').appendChild(newLi)
+  addNewListItem(dealerHand, 0, '.dealer-hand')
   // Displays players current score
   let score = playerHand[0].value + playerHand[1].value
-  document.querySelector('.current-score').textContent = score
- 
+  changeDOMText('.current-score', score)
+  score = dealerHand[0].value 
+  changeDOMText('.dealer-score', score)
 }
 
 const hitMe = () => {
@@ -74,29 +76,23 @@ const hitMe = () => {
   for (i = 0; i < playerHand.length; i++) {
     playerOneScore += playerHand[i].value 
     }
-  // Reveals card dealt to player  
-  let newLi = document.createElement('li')
-  card = playerHand[playerHand.length -1]
-  newLi.textContent = card.rank + ' of ' + card.suit
-  document.querySelector('.player-hand').appendChild(newLi)
+  // Reveals card dealt to player 
+  addNewListItem(playerHand, playerHand.length - 1, '.player-hand') 
   // Updates the players current score
-  document.querySelector('.current-score').textContent = playerOneScore
+  changeDOMText('.current-score', playerOneScore)
   // Ends game if players score goes over 21
   if (playerOneScore > 21 ) {
-    document.querySelector('.declare-winner-banner').textContent = 'Bust, Dealer Wins!'
+    changeDOMText('.declare-winner-banner', 'Bust, Dealer Wins!')
   }
-
 }
 
-
 const standAndPresent = () => {
-  // Ree-establish players score
+  // Re-establish players score
   playerOneScore = 0
   for (i = 0; i < playerHand.length; i++) {
     playerOneScore += playerHand[i].value 
     }
   dealerScore = dealerHand[0].value + dealerHand[1].value
-  
   // Add cards to Dealers hand until score is greater then players
   while (dealerScore < playerOneScore  && dealerScore <= 21) {
     dealerScore = 0
@@ -105,30 +101,24 @@ const standAndPresent = () => {
     for (let i = 0; i < dealerHand.length; i++) {
       dealerScore += dealerHand[i].value 
     }
-
   }
   // Reveal dealer cards 
   for (let i = 1; i < dealerHand.length; i ++) {
-    const newLi = document.createElement('li')
-    card = dealerHand[i]
-    newLi.textContent = card.rank + ' of ' + card.suit
-    document.querySelector('.dealer-hand').appendChild(newLi)
-    document.querySelector('.current-score2').textContent = dealerScore
+    addNewListItem(dealerHand, i, '.dealer-hand')
+    changeDOMText('.dealer-score', dealerScore)
   }
   // Compares scores and announces winner
   if (dealerScore > 21) {
-    document.querySelector('.declare-winner-banner').textContent = 'Dealer Bust, You Win!'
+    changeDOMText('.declare-winner-banner', 'Dealer Bust, You Win!')
     } else {
       if (dealerScore === playerOneScore) {
-        document.querySelector('.declare-winner-banner').textContent = 'Tie, Push'
+        changeDOMText('.declare-winner-banner', 'Tie, Push')
       } else if (dealerScore > playerOneScore) {
-        document.querySelector('.declare-winner-banner').textContent = 'Dealer Wins'
+        changeDOMText('.declare-winner-banner', 'Dealer Wins!')
         } else {
-          document.querySelector('.declare-winner-banner').textContent = 'You Win'
+          changeDOMText('.declare-winner-banner', 'You Win!')
         }
       }
-    
-
   }
   
   const playAgain = () => {
@@ -139,24 +129,16 @@ const standAndPresent = () => {
     // Recreates deck and shuffles
     createDeckOfCards()
     // Clears the table and resets scores to zero
-    document.querySelector('.player-hand').textContent = ''
-    document.querySelector('.dealer-hand').textContent = ''
-    document.querySelector('.current-score').textContent = '0'
-    document.querySelector('.current-score2').textContent = '0'
-    document.querySelector('.declare-winner-banner').textContent = ''
+    changeDOMText('.player-hand', '')
+    changeDOMText('.dealer-hand', '')
+    changeDOMText('.current-score', '0')
+    changeDOMText('.dealer-score', '0')
+    changeDOMText('.declare-winner-banner', '')
   }
 
-
-
-
-
-
+  // Events
 document.addEventListener('DOMContentLoaded', createDeckOfCards)
-
 document.querySelector('.deal').addEventListener('click', dealCards)
-
 document.querySelector('.hit').addEventListener('click', hitMe)
-
 document.querySelector('.stand').addEventListener('click', standAndPresent)
-
 document.querySelector('.play-again').addEventListener('click', playAgain)
