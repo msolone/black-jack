@@ -27,6 +27,10 @@ body {
 
 }
 
+.dealer-hand-display {
+  display: flex;
+}
+
 .dealer-hand-and-score {
   display: flex;
   flex-direction: column;
@@ -41,14 +45,11 @@ body {
 .dealer-hand {
   display: flex;
   list-style: none;
+  margin: 2em -3em;
 }
 
 .dealer-hand li {
   padding: 0 2em
-}
-
-.declare-winner-banner {
-
 }
 
 .first-hand-display {
@@ -58,6 +59,7 @@ body {
 .player-hand {
   display: flex;
   list-style: none;
+  margin: 1em -3em;
 }
 
 .player-hand li {
@@ -74,13 +76,14 @@ body {
 }
 
 .player-hand2 li {
-  padding: 0 2em
+  padding: 0 2em;
 }
 
 .player-hand-and-score {
   display: flex;
   list-style: none;
   flex-direction: column;
+  margin: 1em 0;
 }
 
 .player-hand-and-score li {
@@ -97,6 +100,10 @@ body {
   padding: 0 2em;
 }
 
+#declare-winner-banner2 {
+  display: none;
+}
+
 
 .buttons {
   display: flex;
@@ -108,4 +115,12 @@ body {
 
 #split {
   display: none;
+}
+
+#buttons2 {
+  display: none;
+}
+
+#buttons2 button {
+  padding: 0 2em;
 }

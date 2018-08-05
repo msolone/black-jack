@@ -10,21 +10,24 @@
   <section class='main'>
     <h1 class="lets-play">Let's Play Black Jack</h1>
 
-    <ul class="dealer-hand-and-score">
+    <section class="dealer-hand-display">
+      <ul class="dealer-hand-and-score">
+        <li>Dealer Hand:</li>
         <li>Current Score: <span class="dealer-score"></span></li>
-        <li>Dealer Hand</li>
+        
          
-    </ul>
+      </ul>
   
-    <ul class="dealer-hand">
+      <ul class="dealer-hand">
   
-    </ul>
+      </ul>
+    </section>
 
-    <h3 class="declare-winner-banner"></h3>
+      <h3 class="declare-winner-banner"></h3>
 
     <section class="first-hand-display">
       <ul class="player-hand-and-score">
-          <li>Player Hand</li>
+          <li>Player Hand:</li>
           <li>Current Score: <span class="current-score"></span></li>
       </ul>
 
@@ -33,9 +36,20 @@
       </ul>
     </section>
 
+    <section class="buttons">
+        <button class="deal">DEAL</button>
+        <button id='split'>SPLIT</button>
+        <button id="hit">HIT ME</button>
+        <button id="stand">STAND</button>
+        <button class="change-one-ace">CHANGE ONE ACE VALUE</button>
+        <button class="play-again">PLAY AGAIN</button>
+       </section>  
+
+    <h3 id="declare-winner-banner2"></h3>
+
     <section class="second-hand-display">
       <ul id="player-hand-and-score2">
-          <li>Player Second Hand</li>
+          <li>Player Second Hand:</li>
           <li>Current Score: <span class="current-score2"></span></li>
       </ul>
 
@@ -43,14 +57,12 @@
 
       </ul>
     </section>
-   <section class="buttons">
-    <button class="deal">DEAL</button>
-    <button id='split'>SPLIT</button>
-    <button class="hit">HIT ME</button>
-    <button id="hit2">HIT SECOND HAND</button>
-    <button class="stand">STAND</button>
-    <button class="change-one-ace">CHANGE ONE ACE VALUE</button>
-    <button class="play-again">PLAY AGAIN</button>
+
+   <section id="buttons2">
+    <button id="hit2">HIT ME</button>
+    <button id="stand2">STAND BOTH HANDS</button>
+    <button class="change-one-ace2">CHANGE ONE ACE VALUE</button>
+
    </section>  
   </section> 
 

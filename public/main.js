@@ -1,6 +1,6 @@
 const deck = []
-const suit = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-const rank = ['Ace', '2','3','4','5','6','7','8','9','10','Jack','Queen','King']
+const suit = ['hearts', 'diamonds', 'clubs', 'spades']
+const rank = ['ace', '2','3','4','5','6','7','8','9','10','jack','queen','king']
 const cardValue = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 let playerHand = []
 let dealerHand = []
@@ -8,6 +8,15 @@ let playerHand2 = []
 let playerOneScore = 0
 let dealerScore = 0
 let playerOneScore2 = 0
+
+// Attaching card images to objects
+const cardImagesAttacher = () => {
+  for (i = 0; i < deck.length; i++) {
+    card[i].image = "playing-card-images/"+deck[i].rank+"_of_"+deck[i].suit+".png)"
+  }
+}
+document.body.style.backgroundImage = "url('playing-card-images/9_of_spades.png')"
+
 
 // Creates an Array of 52 shuffled objects with rank, suits, and card values 
 const createDeckOfCards = () => { 
@@ -22,6 +31,11 @@ const createDeckOfCards = () => {
       deck.push(card)
     }
   }
+
+  for (i = 0; i < deck.length; i++) {
+    deck[i].image = "playing-card-images/"+deck[i].rank+"_of_"+deck[i].suit+".png)"
+  }
+ 
   // shuffles array
   for (i = 0; i < deck.length; i++) {
     let j = Math.floor(Math.random() * i)
@@ -44,6 +58,7 @@ const changeDOMText = (tagClass, newContent) => {
   document.querySelector(tagClass).textContent = newContent
 }
 
+// Changes values of Aces in first hand
 const changeOneAceValue = () => {
     for (i = 0; i < playerHand.length; i++) {
       if (playerHand[i].rank === 'Ace') {
@@ -63,17 +78,43 @@ changeDOMText('.current-score', playerScore)
   }
 }
 
+// Changes value of Aces in second hand
+const changeOneAceValue2 = () => {
+  for (i = 0; i < playerHand2.length; i++) {
+    if (playerHand2[i].rank === 'Ace') {
+      playerHand2[i].value = 11
+      break
+
+    }
+  }
+playerScore2 = 0
+for (i = 0; i < playerHand2.length; i++) {
+  playerScore2 += playerHand2[i].value 
+  }
+changeDOMText('.current-score2', playerScore2)
+// Ends game if players score goes over 21
+if (playerScore2 > 21 ) {
+  changeDOMText('#declare-winner-banner2', 'Bust, Dealer Wins!')
+  }
+}
+
+// Split the original hand into 2 hands
 const split = () => {
   playerHand2.push(playerHand[1])
   playerHand.pop()
   changeDOMText('.player-hand', '')
   document.getElementById('player-hand-and-score2').style.display = 'flex'
+  document.getElementById('buttons2').style.display = 'flex'
+  document.getElementById('declare-winner-banner2').style.display = 'flex'
   addNewListItem(playerHand, 0, '.player-hand')
   addNewListItem(playerHand2, 0, '.player-hand2')
   changeDOMText('.current-score', playerHand[0].value)
   changeDOMText('.current-score2', playerHand2[0].value)
+  document.getElementById('split').style.display = 'none'
+  document.getElementById('stand').style.display = 'none'
 }
 
+// Deals cards to player and dealer
 const dealCards = () => {
   for (i = 1; i < 5; i++) {
     if (i % 2 == 0) {
@@ -128,7 +169,7 @@ const dealCards = () => {
   }
 }
 
-
+// Adds cards to first hand
 const hitMe = () => {
   // Adds cards to player hand, eliminates top card from deck
   playerHand.push(deck[deck.length - 1])
@@ -160,6 +201,7 @@ const hitMe = () => {
   }
 }
 
+// Adds cards to second hand
 const hitMe2 = () => {
   // Adds cards to player hand, eliminates top card from deck
   playerHand2.push(deck[deck.length - 1])
@@ -187,19 +229,24 @@ const hitMe2 = () => {
   changeDOMText('.current-score2', playerOneScore2)
   // Ends game if players score goes over 21
   if (playerOneScore2 > 21 ) {
-    changeDOMText('.declare-winner-banner', 'Bust, Dealer Wins!')
+    changeDOMText('#declare-winner-banner2', 'Bust, Dealer Wins!')
   }
 }
 
+// Calculates player/dealer score and decides winner
 const standAndPresent = () => {
   // Re-establish players score
   playerOneScore = 0
   for (i = 0; i < playerHand.length; i++) {
     playerOneScore += playerHand[i].value 
     }
+  playerOneScore2 = 0
+  for (i = 0; i < playerHand2.length; i++) {
+    playerOneScore2 += playerHand2[i].value 
+    }
   dealerScore = dealerHand[0].value + dealerHand[1].value
-  // Add cards to Dealers hand until score is greater then players
-  while (dealerScore < playerOneScore  && dealerScore <= 21) {
+  // Add cards to Dealers hand until score is greater then at least of the players hands 
+  while ((dealerScore < playerOneScore && dealerScore <= 21) || (dealerScore < playerOneScore2 && dealerScore <= 21)) {
     dealerScore = 0
     dealerHand.push(deck[deck.length - 1])
     deck.pop() 
@@ -212,7 +259,7 @@ const standAndPresent = () => {
     addNewListItem(dealerHand, i, '.dealer-hand')
     changeDOMText('.dealer-score', dealerScore)
   }
-  // Compares scores and announces winner
+  // Compares scores of first hand and announces winner
   if (dealerScore > 21) {
     changeDOMText('.declare-winner-banner', 'Dealer Bust, You Win!')
     } else {
@@ -224,8 +271,25 @@ const standAndPresent = () => {
           changeDOMText('.declare-winner-banner', 'You Win!')
         }
       }
+  // Compares scores of second hand and announces winner
+  if (dealerScore > 21) {
+    changeDOMText('#declare-winner-banner2', 'Dealer Bust, You Win!')
+    } else {
+      if (dealerScore === playerOneScore2) {
+        changeDOMText('#declare-winner-banner2', 'Tie, Push')
+      } else if (dealerScore > playerOneScore2) {
+        changeDOMText('#declare-winner-banner2', 'Dealer Wins!')
+        } else {
+          changeDOMText('#declare-winner-banner2', 'You Win!')
+        }
+      }
+      // Removes Hit Me options
+      document.getElementById('hit').style.display = 'none'
+      document.getElementById('hit2').style.display = 'none'  
+    
   }
-  
+
+// Resets the boards and reshuffles deck
 const playAgain = () => {
     // Sets all arrays back to empty
     playerHand.length = 0
@@ -241,16 +305,24 @@ const playAgain = () => {
     changeDOMText('.current-score', '0')
     changeDOMText('.dealer-score', '0')
     changeDOMText('.declare-winner-banner', '')
+    changeDOMText('#declare-winner-banner2', '')
     document.getElementById('split').style.display = 'none'
     document.getElementById('player-hand-and-score2').style.display = 'none'
+    document.getElementById('buttons2').style.display = 'none'
+    document.getElementById('hit').style.display = 'flex'
+    document.getElementById('stand').style.display = 'flex'
+    document.getElementById('hit2').style.display = 'flex'
+    
   }
 
   // Events
 document.addEventListener('DOMContentLoaded', createDeckOfCards)
 document.querySelector('.deal').addEventListener('click', dealCards)
 document.querySelector('#split').addEventListener('click', split)
-document.querySelector('.hit').addEventListener('click', hitMe)
+document.querySelector('#hit').addEventListener('click', hitMe)
 document.querySelector('#hit2').addEventListener('click', hitMe2)
-document.querySelector('.stand').addEventListener('click', standAndPresent)
+document.querySelector('#stand').addEventListener('click', standAndPresent)
+document.querySelector('#stand2').addEventListener('click', standAndPresent)
 document.querySelector('.play-again').addEventListener('click', playAgain)
 document.querySelector('.change-one-ace').addEventListener('click', changeOneAceValue)
+document.querySelector('.change-one-ace2').addEventListener('click', changeOneAceValue2)
