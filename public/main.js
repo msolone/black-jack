@@ -4,8 +4,10 @@ const rank = ['Ace', '2','3','4','5','6','7','8','9','10','Jack','Queen','King']
 const cardValue = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 let playerHand = []
 let dealerHand = []
+let playerHand2 = []
 let playerOneScore = 0
 let dealerScore = 0
+let playerOneScore2 = 0
 
 // Creates an Array of 52 shuffled objects with rank, suits, and card values 
 const createDeckOfCards = () => { 
@@ -61,6 +63,17 @@ changeDOMText('.current-score', playerScore)
   }
 }
 
+const split = () => {
+  playerHand2.push(playerHand[1])
+  playerHand.pop()
+  changeDOMText('.player-hand', '')
+  document.getElementById('player-hand-and-score2').style.display = 'flex'
+  addNewListItem(playerHand, 0, '.player-hand')
+  addNewListItem(playerHand2, 0, '.player-hand2')
+  changeDOMText('.current-score', playerHand[0].value)
+  changeDOMText('.current-score2', playerHand2[0].value)
+}
+
 const dealCards = () => {
   for (i = 1; i < 5; i++) {
     if (i % 2 == 0) {
@@ -79,6 +92,8 @@ const dealCards = () => {
   addNewListItem(playerHand, 1, '.player-hand')
   // Reveals dealers first card
   addNewListItem(dealerHand, 0, '.dealer-hand')
+  
+
   // Sets player score
   let playerScore = playerHand[0].value + playerHand[1].value
   // Sets dealers score based on face up card
@@ -97,18 +112,22 @@ const dealCards = () => {
         playerScore += playerHand[i].value 
         }
     }
-  console.log(dealerHiddenScore)
   if (playerScore === 21 && dealerHiddenScore === 21) {
-    console.log('Double BlackJack!')
+    changeDOMText('.declare-winner-banner', 'You both have Black Jack, its a Push')
   } else if (playerScore === 21) {
-    console.log('Black You Win')
+    changeDOMText('.declare-winner-banner', 'Black Jack, You Win!')
   } else if (dealerHiddenScore === 21) {
-    console.log('Dealer Black Jack, You Lose')
+    changeDOMText('.declare-winner-banner', 'Dealer has Black Jack, You Lose!')
+    addNewListItem(dealerHand, 1, '.dealer-hand')
   }
   // Displays players current score
   changeDOMText('.current-score', playerScore)
   changeDOMText('.dealer-score', dealerShownScore)
+  if (playerHand[0].rank === playerHand[1].rank) {
+    document.getElementById('split').style.display = 'flex'
+  }
 }
+
 
 const hitMe = () => {
   // Adds cards to player hand, eliminates top card from deck
@@ -137,6 +156,37 @@ const hitMe = () => {
   changeDOMText('.current-score', playerOneScore)
   // Ends game if players score goes over 21
   if (playerOneScore > 21 ) {
+    changeDOMText('.declare-winner-banner', 'Bust, Dealer Wins!')
+  }
+}
+
+const hitMe2 = () => {
+  // Adds cards to player hand, eliminates top card from deck
+  playerHand2.push(deck[deck.length - 1])
+  deck.pop()
+  // determines player score
+  playerOneScore2 = 0
+  for (i = 0; i < playerHand2.length; i++) {
+    playerOneScore2 += playerHand2[i].value 
+    }
+  // Reveals card dealt to player 
+  addNewListItem(playerHand2, playerHand2.length - 1, '.player-hand2') 
+  // Change value of Ace to 1 if score over 21
+  if (playerOneScore2 > 21) {
+    for (i = 0; i < playerHand2.length; i++) {
+      if (playerHand2[i].rank === 'Ace') {
+        playerHand2[i].value = 1
+      }
+    }  
+    playerOneScore2 = 0
+    for (i = 0; i < playerHand2.length; i++) {
+      playerOneScore2 += playerHand2[i].value 
+      }
+  }
+  // Updates the players current score
+  changeDOMText('.current-score2', playerOneScore2)
+  // Ends game if players score goes over 21
+  if (playerOneScore2 > 21 ) {
     changeDOMText('.declare-winner-banner', 'Bust, Dealer Wins!')
   }
 }
@@ -179,22 +229,28 @@ const standAndPresent = () => {
 const playAgain = () => {
     // Sets all arrays back to empty
     playerHand.length = 0
+    playerHand2.length = 0
     dealerHand.length = 0
     deck.length = 0
     // Recreates deck and shuffles
     createDeckOfCards()
     // Clears the table and resets scores to zero
     changeDOMText('.player-hand', '')
+    changeDOMText('.player-hand2', '')
     changeDOMText('.dealer-hand', '')
     changeDOMText('.current-score', '0')
     changeDOMText('.dealer-score', '0')
     changeDOMText('.declare-winner-banner', '')
+    document.getElementById('split').style.display = 'none'
+    document.getElementById('player-hand-and-score2').style.display = 'none'
   }
 
   // Events
 document.addEventListener('DOMContentLoaded', createDeckOfCards)
 document.querySelector('.deal').addEventListener('click', dealCards)
+document.querySelector('#split').addEventListener('click', split)
 document.querySelector('.hit').addEventListener('click', hitMe)
+document.querySelector('#hit2').addEventListener('click', hitMe2)
 document.querySelector('.stand').addEventListener('click', standAndPresent)
 document.querySelector('.play-again').addEventListener('click', playAgain)
 document.querySelector('.change-one-ace').addEventListener('click', changeOneAceValue)

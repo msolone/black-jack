@@ -51,12 +51,29 @@ body {
 
 }
 
+.first-hand-display {
+  display: flex;
+}
+
 .player-hand {
   display: flex;
   list-style: none;
 }
 
 .player-hand li {
+  padding: 0 2em
+}
+
+.second-hand-display {
+  display: flex;
+}
+
+.player-hand2 {
+  display: flex;
+  list-style: none;
+}
+
+.player-hand2 li {
   padding: 0 2em
 }
 
@@ -70,10 +87,25 @@ body {
   padding: 0 2em;
 }
 
+#player-hand-and-score2 {
+  display: none;
+  list-style: none;
+  flex-direction: column;
+}
+
+#player-hand-and-score2 li {
+  padding: 0 2em;
+}
+
+
 .buttons {
   display: flex;
 }
 
 .buttons button {
   padding: 0 2em;
+}
+
+#split {
+  display: none;
 }
