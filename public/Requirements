@@ -17,11 +17,18 @@
         - [X] clear deck
         - [X] create new shuffled deck 
         - [X] clear table of cards
+- [X] Dynamically change value of Ace to one if bust 
 
 
-### Refractor 
+### Refractor Goals
 
 - [X] Add a function for appending lists 
-- [ ] Add function for changing content on DOM
+- [X] Add function for changing content on DOM
 - [ ] Add Card Images
 - [ ] Style CSS
+
+
+### Solved bugs
+
+- [X] When dealt two aces, you do not have an option to make
+        one of them worth 11 and one of them worth 1

@@ -42,6 +42,25 @@ const changeDOMText = (tagClass, newContent) => {
   document.querySelector(tagClass).textContent = newContent
 }
 
+const changeOneAceValue = () => {
+    for (i = 0; i < playerHand.length; i++) {
+      if (playerHand[i].rank === 'Ace') {
+        playerHand[i].value = 11
+        break
+
+      }
+    }
+  playerScore = 0
+  for (i = 0; i < playerHand.length; i++) {
+    playerScore += playerHand[i].value 
+    }
+changeDOMText('.current-score', playerScore)
+  // Ends game if players score goes over 21
+  if (playerScore > 21 ) {
+    changeDOMText('.declare-winner-banner', 'Bust, Dealer Wins!')
+  }
+}
+
 const dealCards = () => {
   for (i = 1; i < 5; i++) {
     if (i % 2 == 0) {
@@ -60,11 +79,35 @@ const dealCards = () => {
   addNewListItem(playerHand, 1, '.player-hand')
   // Reveals dealers first card
   addNewListItem(dealerHand, 0, '.dealer-hand')
+  // Sets player score
+  let playerScore = playerHand[0].value + playerHand[1].value
+  // Sets dealers score based on face up card
+  let dealerShownScore = dealerHand[0].value 
+  // Sets dealer hidden score for future calculation
+  let dealerHiddenScore = dealerHand[0].value + dealerHand[1].value
+  // Change value of Ace to 1 if score over 21
+    if (playerScore > 21) {
+      for (i = 0; i < playerHand.length; i++) {
+        if (playerHand[i].rank === 'Ace') {
+          playerHand[i].value = 1
+        }
+      }  
+      playerScore = 0
+      for (i = 0; i < playerHand.length; i++) {
+        playerScore += playerHand[i].value 
+        }
+    }
+  console.log(dealerHiddenScore)
+  if (playerScore === 21 && dealerHiddenScore === 21) {
+    console.log('Double BlackJack!')
+  } else if (playerScore === 21) {
+    console.log('Black You Win')
+  } else if (dealerHiddenScore === 21) {
+    console.log('Dealer Black Jack, You Lose')
+  }
   // Displays players current score
-  let score = playerHand[0].value + playerHand[1].value
-  changeDOMText('.current-score', score)
-  score = dealerHand[0].value 
-  changeDOMText('.dealer-score', score)
+  changeDOMText('.current-score', playerScore)
+  changeDOMText('.dealer-score', dealerShownScore)
 }
 
 const hitMe = () => {
@@ -78,6 +121,18 @@ const hitMe = () => {
     }
   // Reveals card dealt to player 
   addNewListItem(playerHand, playerHand.length - 1, '.player-hand') 
+  // Change value of Ace to 1 if score over 21
+  if (playerOneScore > 21) {
+    for (i = 0; i < playerHand.length; i++) {
+      if (playerHand[i].rank === 'Ace') {
+        playerHand[i].value = 1
+      }
+    }  
+    playerOneScore = 0
+    for (i = 0; i < playerHand.length; i++) {
+      playerOneScore += playerHand[i].value 
+      }
+  }
   // Updates the players current score
   changeDOMText('.current-score', playerOneScore)
   // Ends game if players score goes over 21
@@ -121,7 +176,7 @@ const standAndPresent = () => {
       }
   }
   
-  const playAgain = () => {
+const playAgain = () => {
     // Sets all arrays back to empty
     playerHand.length = 0
     dealerHand.length = 0
@@ -142,3 +197,4 @@ document.querySelector('.deal').addEventListener('click', dealCards)
 document.querySelector('.hit').addEventListener('click', hitMe)
 document.querySelector('.stand').addEventListener('click', standAndPresent)
 document.querySelector('.play-again').addEventListener('click', playAgain)
+document.querySelector('.change-one-ace').addEventListener('click', changeOneAceValue)
