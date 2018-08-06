@@ -3,7 +3,7 @@ html {
 }
 
 * {
-  margin: 15px;
+  margin: 4px;
   padding: 0;
 }
 
@@ -11,6 +11,10 @@ body {
   margin: 0;
   min-height: 100%;
   font: 16px / 1 sans-serif;
+  background-image: url('https://bit.ly/2LUDrO4');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  color: white;
 }
 
 .main {
@@ -18,7 +22,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 45em; */
 }
 
 .lets-play {
@@ -27,15 +30,23 @@ body {
 
 }
 
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
 .dealer-hand-display {
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .dealer-hand-and-score {
   display: flex;
   flex-direction: column;
   list-style: none;
-  margin: 2em 0;
+  align-items: center;
+  margin: 2em 0 0 0;
 }
 
 .dealer-hand-and-score li {
@@ -45,15 +56,24 @@ body {
 .dealer-hand {
   display: flex;
   list-style: none;
-  margin: 2em -3em;
+  margin: 1em -3em;
 }
 
 .dealer-hand li {
-  padding: 0 2em
+  padding: 0 2em;
+  height: 10em;
+  width: 3em;
 }
 
+.player-display {
+  display: flex;
+
+}
 .first-hand-display {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+
 }
 
 .player-hand {
@@ -63,27 +83,36 @@ body {
 }
 
 .player-hand li {
-  padding: 0 2em
+  padding: 0 2em;
+  height: 10em;
+  width: 3em;
 }
 
 .second-hand-display {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+
 }
 
 .player-hand2 {
   display: flex;
   list-style: none;
+  margin: 1em -3em;
 }
 
 .player-hand2 li {
   padding: 0 2em;
+  height: 10em;
+  width: 3em;
 }
 
 .player-hand-and-score {
   display: flex;
   list-style: none;
   flex-direction: column;
-  margin: 1em 0;
+  align-items: center;
+  /* margin: 1em 0; */
 }
 
 .player-hand-and-score li {
@@ -94,6 +123,7 @@ body {
   display: none;
   list-style: none;
   flex-direction: column;
+  align-items: center;
 }
 
 #player-hand-and-score2 li {
